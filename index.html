@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE SCHOOL | Premium Education in Hyderabad</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root { --accent: #f59e0b; --accent-glow: rgba(245, 158, 11, 0.4); }
+        body { font-family: 'Poppins', sans-serif; overflow-x: hidden; background-color: #020617; color: #f8fafc; }
+        h1, h2, h3, .serif-font { font-family: 'Merriweather', serif; }
+        .anton-font { font-family: 'Anton', sans-serif; }
+
+        /* Floating Background Engine */
+        #floating-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+        .floating-icon { position: absolute; color: rgba(255, 255, 255, 0.04); animation: floatUp linear infinite; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.05)); }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+        .bg-gradient-mesh {
+            position: fixed; inset: 0; z-index: -3;
+            background: radial-gradient(circle at 15% 50%, rgba(30, 58, 138, 0.15), transparent 25%), radial-gradient(circle at 85% 30%, rgba(245, 158, 11, 0.1), transparent 25%);
+        }
+
+        /* Seamless White Navbar Links */
+        .nav-link { position: relative; color: #1e293b; transition: color 0.3s; font-weight: 600; }
+        .nav-link:hover { color: var(--accent); }
+        .nav-link:after { content: ''; position: absolute; width: 0; height: 3px; bottom: -6px; left: 0; background: var(--accent); transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 2px; }
+        .nav-link:hover:after { width: 100%; }
+
+        /* Multiplied blend mode eliminates white backgrounds perfectly on white surfaces */
+        .logo-blend { mix-blend-mode: multiply; transition: transform 0.4s ease; }
+        .logo-container:hover .logo-blend { transform: scale(1.05); }
+
+        @keyframes ticker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+        .animate-marquee { display: inline-flex; animation: ticker 30s linear infinite; white-space: nowrap; }
+        .animate-marquee:hover { animation-play-state: paused; }
+
+        /* Premium Glass Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05); border-top: 1px solid rgba(255, 255, 255, 0.1); border-left: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .glass-card:hover { transform: translateY(-10px); border-color: rgba(245, 158, 11, 0.3); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5), 0 0 30px rgba(245, 158, 11, 0.1); }
+
+        /* Aesthetic Vibrant Glows */
+        .vibrant-glow { background: linear-gradient(45deg, #ec4899, #8b5cf6, #3b82f6); filter: blur(60px); opacity: 0.5; z-index: -1; border-radius: 50%; }
+
+        /* CSM Accordion */
+        .csm-accordion { display: flex; width: 100%; height: 75vh; min-height: 550px; overflow: hidden; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px -15px rgba(0,0,0,0.7); }
+        .csm-panel { position: relative; flex: 1; transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer; overflow: hidden; border-right: 1px solid rgba(255,255,255,0.05); }
+        .csm-panel:last-child { border-right: none; }
+        .csm-panel:hover { flex: 6; }
+        .csm-accordion:hover .csm-panel:not(:hover) { filter: brightness(0.3) grayscale(0.8); }
+        .csm-panel-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 1s ease; }
+        .csm-panel:hover .csm-panel-bg { transform: scale(1.08); }
+        .csm-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 0%, rgba(2,6,23,0.4) 60%, transparent 100%); transition: opacity 0.5s; opacity: 0.9; }
+        .csm-panel:hover .csm-overlay { opacity: 1; background: linear-gradient(to top, #020617 0%, rgba(2,6,23,0.7) 50%, transparent 100%); }
+        .csm-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem; opacity: 0; transform: translateY(30px); transition: all 0.6s ease 0.2s; pointer-events: none; }
+        .csm-panel:hover .csm-content { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .csm-vertical-title { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%) rotate(180deg); writing-mode: vertical-rl; white-space: nowrap; font-weight: 900; font-size: 1.5rem; color: rgba(255,255,255,0.8); letter-spacing: 4px; transition: opacity 0.3s ease; }
+        .csm-panel:hover .csm-vertical-title { opacity: 0; }
+
+        /* 3D Coverflow Gallery CSS */
+        .gallery-container { position: relative; width: 100%; height: 60vh; perspective: 1500px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .gallery-item {
+            position: absolute; width: 60%; max-width: 600px; height: 80%; border-radius: 2rem; overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); user-select: none;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); opacity: 0; transition: opacity 0.4s; }
+        .gallery-item.active .gallery-info { opacity: 1; }
+        
+        /* Modal & Utilities */
+        #facility-modal { opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
+        #facility-modal.active { opacity: 1; pointer-events: auto; }
+        .modal-bg-slide { position: absolute; inset: 0; background-size: cover; background-position: center; transition: opacity 1.5s ease; transform: scale(1.02); }
+        .typewriter-cursor::after { content: '▌'; animation: blink 1s step-end infinite; color: var(--accent); margin-left: 6px; text-shadow: 0 0 10px var(--accent-glow); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .ghost-text { font-family: 'Anton', sans-serif; position: absolute; inset-x: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: -1; font-size: clamp(80px, 20vw, 350px); letter-spacing: -0.02em; color: rgba(255,255,255,0.02); white-space: nowrap; }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- FLOATING BACKGROUND ENGINE -->
+    <div class="bg-gradient-mesh"></div>
+    <div id="floating-bg"></div>
+
+    <!-- Top Marquee -->
+    <div class="bg-slate-900/80 backdrop-blur-md text-slate-300 py-2 text-xs md:text-sm font-medium overflow-hidden border-b border-white/5 flex relative z-50">
+        <div class="animate-marquee">
+            <span class="mx-8 text-amber-400 font-bold">🎓 Admissions Open 2026-27 | Limited Seats for Std 1-5</span>
+            <span class="mx-8"><i class="fa-solid fa-location-dot text-amber-500 mr-2"></i> 6-2-44/1, Saifabad, Hyderabad</span>
+            <span class="mx-8"><i class="fa-solid fa-phone text-amber-500 mr-2"></i> +040-23307869</span>
+            <span class="mx-8"><i class="fa-solid fa-envelope text-amber-500 mr-2"></i> theschool1983@gmail.com</span>
+        </div>
+    </div>
+
+    <!-- PERFECT WHITE NAVBAR (With slightly smaller text for optimal balance) -->
+    <nav class="bg-white shadow-2xl sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-[95rem] mx-auto px-6 py-2 flex items-center justify-between">
+            <div class="flex items-center gap-4 md:gap-5 logo-container cursor-pointer">
+                <!-- Using mix-blend-multiply ensures any white box completely vanishes against the white navbar -->
+                <img src="Logo.png" alt="The School Logo" class="logo-blend h-20 md:h-24 lg:h-28 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150x150?text=LOGO'">
+                <div>
+                    <!-- Slightly decreased text size as requested: from text-5xl to text-4xl -->
+                    <span class="font-black text-2xl md:text-3xl lg:text-4xl tracking-tight text-blue-950 serif-font mt-1 block">THE SCHOOL</span>
+                </div>
+            </div>
+
+            <div class="hidden lg:flex items-center gap-10 text-lg">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">Legacy</a>
+                <a href="#curriculum" class="nav-link">Curriculum</a>
+                <a href="#facilities" class="nav-link">Facilities</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <a href="#contact" class="hidden md:flex bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-full text-base font-bold transition-all items-center gap-2 shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:-translate-y-1">
+                <span>Enroll Now</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        <div id="heroSlider" class="absolute inset-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950 z-10"></div>
+        
+        <div id="heroTextContainer" class="relative z-20 max-w-6xl mx-auto px-6 text-center w-full transition-all duration-1000 ease-in-out opacity-100 translate-y-0">
+            <div class="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-6 py-2 rounded-full mb-8">
+                <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                <span class="uppercase tracking-[0.3em] text-xs font-bold text-slate-300">Est. 1983</span>
+                <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+            </div>
+            <h1 id="heroTitle" class="text-6xl md:text-8xl font-black leading-[1.1] mb-8 drop-shadow-2xl">
+                Where Learning Feels <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">Like Joy</span>
+            </h1>
+            <p id="heroSubtitle" class="text-xl md:text-2xl max-w-3xl mx-auto text-slate-300 font-light mb-12 leading-relaxed">
+                Nurturing young minds with academic excellence, creative arts, and fundamental values to build the visionary leaders of tomorrow.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-6">
+                <a href="#contact" class="bg-amber-500 text-slate-950 hover:bg-amber-400 px-10 py-5 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:-translate-y-1">Start Admission Process</a>
+                <a href="#facilities" class="bg-white/5 backdrop-blur-md border border-white/20 hover:bg-white hover:text-slate-950 text-white px-10 py-5 rounded-full font-bold text-lg transition-all hover:-translate-y-1">Explore Campus</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIBRANT ABOUT SECTION -->
+    <section id="about" class="min-h-screen flex items-center py-32 relative overflow-hidden">
+        <div class="ghost-text top-10">OUR LEGACY</div>
+        <!-- Vibrant background glowing orbs -->
+        <div class="absolute top-1/4 left-10 w-96 h-96 vibrant-glow"></div>
+        <div class="absolute bottom-1/4 right-10 w-96 h-96 vibrant-glow" style="background: linear-gradient(45deg, #f59e0b, #ec4899);"></div>
+
+        <div class="max-w-[95rem] mx-auto px-6 w-full relative z-10">
+            <div class="grid lg:grid-cols-2 gap-20 items-center mb-24">
+                <div class="relative group">
+                    <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1000&auto=format&fit=crop" alt="Students learning" class="rounded-[2rem] shadow-2xl relative z-10 w-full object-cover h-[600px] border border-white/20 group-hover:scale-[1.02] transition-transform duration-700">
+                </div>
+                
+                <div class="glass-card p-12 lg:p-16 rounded-[2.5rem] bg-slate-900/40 border border-white/10 backdrop-blur-3xl">
+                    <div class="w-16 h-1 bg-gradient-to-r from-pink-500 to-amber-500 mb-8 rounded-full"></div>
+                    <h2 class="text-5xl lg:text-6xl font-black text-white mb-8 leading-tight">A Tradition of <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-pink-400">Excellence</span></h2>
+                    <p class="text-slate-300 mb-6 leading-relaxed text-lg font-light">Founded with the ambitious aim of becoming an exclusive, holistic institution, The School has experienced rapid, qualitative growth. Our goal is not just to make learning pleasurable, but to mold children into highly valuable global citizens.</p>
+                    <p class="text-slate-300 mb-10 leading-relaxed text-lg font-light">Under the visionary guidance of our Founder and Principal, <strong class="text-white font-medium">Mrs. Rehana Khan</strong>, our dedicated teachers implement highly innovative programs to tightly weave fundamental cultural values with modern academic rigor.</p>
+                    <ul class="space-y-6">
+                        <li class="flex items-center gap-5 text-lg font-medium text-slate-200"><div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500/20 to-amber-500/20 border border-white/10 flex items-center justify-center text-amber-400 shadow-sm"><i class="fa-solid fa-language"></i></div> Immersive English Medium Instruction</li>
+                        <li class="flex items-center gap-5 text-lg font-medium text-slate-200"><div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center text-cyan-400 shadow-sm"><i class="fa-solid fa-book-open"></i></div> Rigorous State Board Curriculum (I to X)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Animated Counters -->
+            <div class="glass-card rounded-[3rem] p-12 flex flex-col md:flex-row justify-around items-center text-center divide-y md:divide-y-0 md:divide-x divide-white/10" id="counter-section">
+                <div class="p-8 w-full">
+                    <div class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-amber-300 to-pink-500 mb-3 anton-font tracking-widest"><span class="counter" data-target="30">0</span>+</div>
+                    <p class="text-slate-300 uppercase tracking-[0.2em] text-sm font-bold">Experienced Teachers</p>
+                </div>
+                <div class="p-8 w-full">
+                    <div class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-cyan-300 to-blue-500 mb-3 anton-font tracking-widest"><span class="counter" data-target="400">0</span>+</div>
+                    <p class="text-slate-300 uppercase tracking-[0.2em] text-sm font-bold">Happy Students</p>
+                </div>
+                <div class="p-8 w-full">
+                    <div class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 to-teal-500 mb-3 anton-font tracking-widest"><span class="counter" data-target="100">0</span>%</div>
+                    <p class="text-slate-300 uppercase tracking-[0.2em] text-sm font-bold">Parents' Satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SCROLLING CURRICULUM SECTION -->
+    <section id="curriculum" class="min-h-screen flex flex-col justify-center py-32 relative overflow-hidden">
+        <div class="ghost-text top-1/4 opacity-50">INNOVATION</div>
+        <div class="max-w-[100rem] mx-auto w-full relative z-10">
+            <div class="text-center mb-16 px-6">
+                <span class="text-amber-500 font-bold tracking-[0.3em] uppercase text-sm drop-shadow-md">Beyond Textbooks</span>
+                <h2 class="text-5xl md:text-6xl font-black text-white mb-6 mt-4">Future-Ready Curriculum</h2>
+                <p class="text-slate-400 max-w-3xl mx-auto text-xl font-light">We prepare our students for the rapidly evolving digital landscapes of tomorrow.</p>
+            </div>
+
+            <!-- Dynamic Auto-Scrolling Track -->
+            <div class="relative w-full overflow-hidden px-4">
+                <div id="curriculum-track" class="flex gap-8 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-10 pt-4 px-4 cursor-grab active:cursor-grabbing">
+                    
+                    <!-- 1. AI & Tech -->
+                    <div class="glass-card p-10 rounded-[2rem] group hover:bg-white/5 shrink-0 w-[85vw] md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.33rem)] snap-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all duration-500"></div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center text-blue-400 mb-8 group-hover:scale-110 transition-transform"><i class="fa-solid fa-network-wired text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Tech & AI Logic</h3>
+                        <p class="text-slate-400 leading-relaxed font-light">Equipped with state-of-the-art hardware, upper-standard students dive deep into the world of computational logic and problem-solving fundamentals.</p>
+                    </div>
+
+                    <!-- 2. Game Dev -->
+                    <div class="glass-card p-10 rounded-[2rem] group hover:bg-white/5 shrink-0 w-[85vw] md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.33rem)] snap-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl group-hover:bg-amber-500/20 transition-all duration-500"></div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-white/10 flex items-center justify-center text-amber-400 mb-8 group-hover:scale-110 transition-transform"><i class="fa-solid fa-gamepad text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Coding Studio</h3>
+                        <p class="text-slate-400 leading-relaxed font-light">Fostering intense mathematics and storytelling, students start by designing their own interactive text-based applications, building core programming skills.</p>
+                    </div>
+
+                    <!-- 3. Global Leadership -->
+                    <div class="glass-card p-10 rounded-[2rem] group hover:bg-white/5 shrink-0 w-[85vw] md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.33rem)] snap-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-all duration-500"></div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-white/10 flex items-center justify-center text-emerald-400 mb-8 group-hover:scale-110 transition-transform"><i class="fa-solid fa-globe text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Global Leadership</h3>
+                        <p class="text-slate-400 leading-relaxed font-light">Focusing heavily on corporate communication, presentation, and strategic thinking, tailored to build soft skills that match the standards of top MNCs.</p>
+                    </div>
+
+                    <!-- 4. Digital Arts -->
+                    <div class="glass-card p-10 rounded-[2rem] group hover:bg-white/5 shrink-0 w-[85vw] md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.33rem)] snap-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-3xl group-hover:bg-pink-500/20 transition-all duration-500"></div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 border border-white/10 flex items-center justify-center text-pink-400 mb-8 group-hover:scale-110 transition-transform"><i class="fa-solid fa-camera-retro text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Digital Arts</h3>
+                        <p class="text-slate-400 leading-relaxed font-light">A dedicated creative space where students master advanced photo manipulation and media techniques, transforming raw school memories into cinematic stories.</p>
+                    </div>
+                    
+                    <!-- 5. Financial Literacy -->
+                    <div class="glass-card p-10 rounded-[2rem] group hover:bg-white/5 shrink-0 w-[85vw] md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.33rem)] snap-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-all duration-500"></div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-white/10 flex items-center justify-center text-indigo-400 mb-8 group-hover:scale-110 transition-transform"><i class="fa-solid fa-chart-line text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Financial Literacy</h3>
+                        <p class="text-slate-400 leading-relaxed font-light">Preparing students for real-world economics through interactive modules covering investments, modern market functions, and personal financial management.</p>
+                    </div>
+
+                    <!-- 6. Eco-Innovation -->
+                    <div class="glass-card p-10 rounded-[2rem] group hover:bg-white/5 shrink-0 w-[85vw] md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.33rem)] snap-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-3xl group-hover:bg-green-500/20 transition-all duration-500"></div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-lime-500/20 border border-white/10 flex items-center justify-center text-green-400 mb-8 group-hover:scale-110 transition-transform"><i class="fa-solid fa-leaf text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Eco-Innovation</h3>
+                        <p class="text-slate-400 leading-relaxed font-light">Focusing on global sustainability, students learn the science of green energy, recycling technologies, and how to build solutions for a changing climate.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPANDED FACILITIES SECTION (7 Facilities) -->
+    <section id="facilities" class="min-h-screen flex flex-col justify-center py-32 relative overflow-hidden">
+        <div class="max-w-[100rem] mx-auto px-6 w-full relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-amber-500 font-bold tracking-[0.3em] uppercase text-sm drop-shadow-md">Infrastructure</span>
+                <h2 class="text-5xl md:text-6xl font-black text-white mb-6 mt-4">World-Class Facilities</h2>
+                <p class="text-slate-400 max-w-3xl mx-auto text-xl font-light">Hover to explore the state-of-the-art environment designed for absolute brilliance.</p>
+            </div>
+            
+            <div class="csm-accordion">
+                <!-- 1. Library -->
+                <div class="csm-panel group" onclick="openFacilityModal('library')">
+                    <div class="csm-panel-bg" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&auto=format&fit=crop');"></div>
+                    <div class="csm-overlay"></div>
+                    <div class="csm-vertical-title">Modern Library</div>
+                    <div class="csm-content">
+                        <i class="fa-solid fa-book text-4xl text-amber-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2 text-white">Modern Library</h3>
+                        <p class="text-slate-300 text-sm mb-4">Over 10,000 volumes & digital research kiosks.</p>
+                        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Click to View <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- 2. Science Labs -->
+                <div class="csm-panel group" onclick="openFacilityModal('science')">
+                    <div class="csm-panel-bg" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&auto=format&fit=crop');"></div>
+                    <div class="csm-overlay"></div>
+                    <div class="csm-vertical-title">Science Labs</div>
+                    <div class="csm-content">
+                        <i class="fa-solid fa-flask text-4xl text-amber-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2 text-white">Science Labs</h3>
+                        <p class="text-slate-300 text-sm mb-4">Advanced physics, chemistry, and biology research labs.</p>
+                        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Click to View <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- 3. Computer Science -->
+                <div class="csm-panel group" onclick="openFacilityModal('computer')">
+                    <div class="csm-panel-bg" style="background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop');"></div>
+                    <div class="csm-overlay"></div>
+                    <div class="csm-vertical-title">Computer Lab</div>
+                    <div class="csm-content">
+                        <i class="fa-solid fa-desktop text-4xl text-amber-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2 text-white">Computer Lab</h3>
+                        <p class="text-slate-300 text-sm mb-4">High-speed gigabit access with a 1:1 student ratio.</p>
+                        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Click to View <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- 4. Smart Classes -->
+                <div class="csm-panel group" onclick="openFacilityModal('audiovisual')">
+                    <div class="csm-panel-bg" style="background-image: url('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&auto=format&fit=crop');"></div>
+                    <div class="csm-overlay"></div>
+                    <div class="csm-vertical-title">Smart Classes</div>
+                    <div class="csm-content">
+                        <i class="fa-solid fa-film text-4xl text-amber-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2 text-white">Smart Classes</h3>
+                        <p class="text-slate-300 text-sm mb-4">Interactive digital boards replacing traditional chalk.</p>
+                        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Click to View <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- 5. Sports Complex -->
+                <div class="csm-panel group" onclick="openFacilityModal('sports')">
+                    <div class="csm-panel-bg" style="background-image: url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&auto=format&fit=crop');"></div>
+                    <div class="csm-overlay"></div>
+                    <div class="csm-vertical-title">Sports Complex</div>
+                    <div class="csm-content">
+                        <i class="fa-solid fa-basketball text-4xl text-amber-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2 text-white">Sports Complex</h3>
+                        <p class="text-slate-300 text-sm mb-4">Massive outdoor courts and indoor athletic facilities.</p>
+                        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Click to View <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- 6. Martial Arts -->
+                <div class="csm-panel group" onclick="openFacilityModal('martial')">
+                    <div class="csm-panel-bg" style="background-image: url('https://images.unsplash.com/photo-1555597673-b21d5c935865?w=800&auto=format&fit=crop');"></div>
+                    <div class="csm-overlay"></div>
+                    <div class="csm-vertical-title">Martial Arts</div>
+                    <div class="csm-content">
+                        <i class="fa-solid fa-shield-halved text-4xl text-amber-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2 text-white">Martial Arts</h3>
+                        <p class="text-slate-300 text-sm mb-4">Certified dojo for discipline and self-defense training.</p>
+                        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Click to View <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- 7. Fine Arts Studio -->
+                <div class="csm-panel group" onclick="openFacilityModal('arts')">
+                    <div class="csm-panel-bg" style="background-image: url('https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&auto=format&fit=crop');"></div>
+                    <div class="csm-overlay"></div>
+                    <div class="csm-vertical-title">Fine Arts</div>
+                    <div class="csm-content">
+                        <i class="fa-solid fa-palette text-4xl text-amber-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2 text-white">Fine Arts Studio</h3>
+                        <p class="text-slate-300 text-sm mb-4">A creative sanctuary for painting, music, and sculpting.</p>
+                        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Click to View <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- NEW 3D COVERFLOW GALLERY (LOCAL IMAGES)    -->
+    <!-- ========================================== -->
+    <section id="gallery" class="relative w-full min-h-screen flex flex-col justify-center overflow-hidden py-20">
+        <div class="ghost-text top-[15%] opacity-10">ALBUMS</div>
+
+        <div class="text-center mb-10 relative z-40">
+            <span class="text-amber-500 font-bold tracking-[0.3em] uppercase text-sm drop-shadow-md">School Albums</span>
+            <h2 class="text-5xl md:text-6xl font-black text-white mt-4">Moments That Matter</h2>
+            <p class="text-slate-400 mt-4 font-light text-lg">Click any photo to bring it to the front, or let it auto-rotate.</p>
+        </div>
+
+        <!-- 3D Gallery Container -->
+        <div class="gallery-container" id="coverflow-container">
+            <!-- Items injected by JS using your local Img1.png to Img7.png -->
+        </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section id="contact" class="min-h-screen flex items-center py-32 relative border-t border-white/5 bg-slate-900/50 backdrop-blur-md">
+        <div class="max-w-[95rem] mx-auto px-6 grid md:grid-cols-2 gap-16 relative z-10 w-full">
+            <div class="glass-card p-12 lg:p-16 rounded-[3rem]">
+                <h2 class="text-5xl font-black text-white mb-4">Get In Touch</h2>
+                <p class="text-slate-400 mb-10 text-lg font-light">Admissions are open. A few seats are available for standards 1 to 5.</p>
+                
+                <form id="contactForm" class="space-y-6">
+                    <input type="text" required placeholder="Full Name" class="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:bg-white/10 transition-all text-lg">
+                    <input type="tel" required placeholder="Mobile Number" class="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:bg-white/10 transition-all text-lg">
+                    <textarea required placeholder="How can we help you?" rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:bg-white/10 transition-all text-lg"></textarea>
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 py-5 rounded-2xl text-xl font-bold transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:-translate-y-1">Submit Enquiry</button>
+                </form>
+            </div>
+            
+            <div class="flex flex-col justify-center space-y-12 p-8 lg:pl-20">
+                <div>
+                    <h3 class="text-4xl font-black mb-6 text-white">Contact Info</h3>
+                    <div class="w-24 h-1 bg-amber-500 rounded-full"></div>
+                </div>
+                
+                <div class="flex gap-8 items-start group">
+                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-center shrink-0 text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all duration-300">
+                        <i class="fa-solid fa-map-marker-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-2xl text-white mb-2">Location</h4>
+                        <p class="text-slate-400 text-lg leading-relaxed font-light">THE SCHOOL, 6-2-44/1,<br>Saifabad, Hyderabad, (T.S)</p>
+                    </div>
+                </div>
+                <div class="flex gap-8 items-start group">
+                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-center shrink-0 text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all duration-300">
+                        <i class="fa-solid fa-clock text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-2xl text-white mb-2">Opening Hours</h4>
+                        <p class="text-slate-400 text-lg font-light leading-relaxed">Pre-Primary: 8:50 AM to 1:00 PM<br>Classes I to X: 8:50 AM to 3:45 PM</p>
+                    </div>
+                </div>
+                <div class="flex gap-8 items-start group">
+                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-center shrink-0 text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all duration-300">
+                        <i class="fa-solid fa-phone text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-2xl text-white mb-2">Contact Detail</h4>
+                        <p class="text-slate-400 text-lg font-light leading-relaxed">040-23307869<br>theschool1983@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-slate-400 py-12 text-center relative z-10 border-t border-white/5">
+        <div class="max-w-[95rem] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-lg">© 2026 THE SCHOOL. All Rights Reserved.</p>
+            <p class="text-base tracking-widest uppercase font-medium text-slate-500">Founder & Principal: Mrs. Rehana Khan</p>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- FLOATING TYPEWRITER MODAL                  -->
+    <!-- ========================================== -->
+    <div id="facility-modal" class="fixed inset-0 z-[100] flex items-center justify-center">
+        <!-- Blur Backdrop -->
+        <div class="absolute inset-0 bg-slate-950/80 z-0"></div>
+        
+        <!-- Modal Background Slider -->
+        <div id="modal-bg-container" class="absolute inset-0 z-1 opacity-30 mix-blend-luminosity"></div>
+        <div class="absolute inset-0 z-10 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
+        
+        <!-- Close Button -->
+        <button onclick="closeFacilityModal()" class="absolute top-10 right-10 z-50 w-16 h-16 rounded-full bg-white/5 hover:bg-amber-500 text-white hover:text-slate-900 transition-all flex items-center justify-center text-2xl border border-white/20 backdrop-blur-md">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Dynamic Floating Content (Typewriter) -->
+        <main class="relative z-20 w-full px-8 lg:px-32 flex items-center h-full">
+            <div class="max-w-4xl w-full text-white">
+                <div id="modal-icon" class="inline-flex items-center justify-center w-24 h-24 rounded-[2rem] bg-amber-500/10 text-amber-400 border border-amber-500/30 mb-10 shadow-[0_0_50px_rgba(245,158,11,0.15)]">
+                    <i class="fa-solid fa-desktop text-5xl"></i>
+                </div>
+                
+                <h1 id="modal-title" class="text-6xl md:text-7xl font-black mb-10 drop-shadow-2xl tracking-tight">Facility Title</h1>
+                
+                <div id="modal-desc" class="text-slate-300 font-light leading-relaxed text-2xl md:text-3xl min-h-[300px] typewriter-cursor">
+                    <!-- Text will be typed here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LOGIC SCRIPTS                              -->
+    <!-- ========================================== -->
+    <script>
+        // --- 0. FLOATING BACKGROUND GENERATOR ---
+        function generateFloatingIcons() {
+            const container = document.getElementById('floating-bg');
+            const icons = ['fa-book', 'fa-pencil', 'fa-graduation-cap', 'fa-laptop-code', 'fa-flask', 'fa-globe', 'fa-atom', 'fa-palette'];
+            
+            for(let i=0; i<35; i++) {
+                const iconElement = document.createElement('i');
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                iconElement.className = `fa-solid ${randomIcon} floating-icon text-3xl md:text-5xl lg:text-7xl`;
+                
+                const left = Math.random() * 100;
+                const duration = Math.random() * 20 + 25; 
+                const delay = Math.random() * 40; 
+                
+                iconElement.style.left = `${left}%`;
+                iconElement.style.animationDuration = `${duration}s`;
+                iconElement.style.animationDelay = `-${delay}s`; 
+                
+                container.appendChild(iconElement);
+            }
+        }
+        generateFloatingIcons();
+
+        // --- 1. HERO SLIDER ---
+        let heroIndex = 0;
+        const heroData = [
+            { 
+                image: "https://images.unsplash.com/photo-1509062522246-3755977927d7",
+                title: "Where Learning Feels <br/><span class='text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500'>Like Joy</span>",
+                subtitle: "Nurturing young minds with academic excellence, creative arts, and fundamental values to build the visionary leaders of tomorrow."
+            },
+            { 
+                image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b",
+                title: "Empowering the <br/><span class='text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500'>Next Generation</span>",
+                subtitle: "Providing state-of-the-art facilities and dedicated corporate mentors to unlock every child's potential."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b",
+                title: "A Tradition of <br/><span class='text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500'>Excellence</span>",
+                subtitle: "Over 40 years of commitment to holistic education, robust sports, and ethical character building since 1983."
+            }
+        ];
+
+        function createHeroSlider() {
+            const container = document.getElementById('heroSlider');
+            heroData.forEach((slide, i) => {
+                const div = document.createElement('div');
+                div.className = `absolute inset-0 bg-cover bg-center transition-opacity duration-[1500ms] ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+                div.style.backgroundImage = `url('${slide.image}?w=2000&h=1200&fit=crop')`;
+                container.appendChild(div);
+            });
+        }
+
+        function nextHero() {
+            const textContainer = document.getElementById('heroTextContainer');
+            textContainer.classList.remove('opacity-100', 'translate-y-0');
+            textContainer.classList.add('opacity-0', 'translate-y-12');
+            
+            setTimeout(() => {
+                const slides = document.querySelectorAll('#heroSlider > div');
+                slides[heroIndex].classList.replace('opacity-100', 'opacity-0');
+                
+                heroIndex = (heroIndex + 1) % heroData.length;
+                
+                slides[heroIndex].classList.replace('opacity-0', 'opacity-100');
+                
+                document.getElementById('heroTitle').innerHTML = heroData[heroIndex].title;
+                document.getElementById('heroSubtitle').innerHTML = heroData[heroIndex].subtitle;
+                
+                textContainer.classList.remove('opacity-0', 'translate-y-12');
+                textContainer.classList.add('opacity-100', 'translate-y-0');
+            }, 800); 
+        }
+        setInterval(nextHero, 7000);
+
+        // --- 2. SCROLL ANIMATED COUNTERS ---
+        const counters = document.querySelectorAll('.counter');
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-target');
+                    const increment = target / (2500 / 16);
+                    let current = 0;
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.innerText = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCounter();
+                    obs.unobserve(counter);
+                }
+            });
+        }, { rootMargin: '0px', threshold: 0.5 });
+        counters.forEach(counter => observer.observe(counter));
+
+        // --- 3. AUTO-SCROLLING CURRICULUM TRACK ---
+        function setupCurriculumScroll() {
+            const track = document.getElementById('curriculum-track');
+            if(!track) return;
+            
+            setInterval(() => {
+                if(track.matches(':hover') || track.matches(':active')) return; 
+                
+                const cardWidth = track.firstElementChild.offsetWidth + parseInt(window.getComputedStyle(track).gap || 0);
+                
+                if(track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+                    track.scrollTo({left: 0, behavior: 'smooth'});
+                } else {
+                    track.scrollBy({left: cardWidth, behavior: 'smooth'});
+                }
+            }, 3500);
+        }
+
+        // --- 4. NEW 3D COVERFLOW GALLERY LOGIC (Using your Local Images) ---
+        // INTEGRATED ALL 7 LOCAL IMAGES PERFECTLY INTO THE COVERFLOW GALLERY 
+        const galleryImages = [
+            { src: 'Img1.png', title: 'Campus Life' },
+            { src: 'Img2.png', title: 'Annual Sports Meet' },
+            { src: 'Img3.png', title: 'Science Innovation Fair' },
+            { src: 'Img4.png', title: 'Interactive Learning' },
+            { src: 'Img5.png', title: 'Graduation Day' },
+            { src: 'Img6.png', title: 'Classroom Activities' },
+            { src: 'Img7.png', title: 'Farewell Event' }
+        ];
+
+        let activeGalleryIndex = 0;
+        let coverflowInterval;
+
+        function buildCoverflow() {
+            const container = document.getElementById('coverflow-container');
+            container.innerHTML = '';
+
+            galleryImages.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `gallery-item ${index === activeGalleryIndex ? 'active' : ''}`;
+                
+                // Clicking an image brings it to the front
+                div.onclick = () => {
+                    activeGalleryIndex = index;
+                    updateCoverflow();
+                    resetCoverflowTimer();
+                };
+
+                const img = document.createElement('img');
+                img.src = item.src;
+                
+                const info = document.createElement('div');
+                info.className = 'gallery-info';
+                info.innerHTML = `<h3 class="text-2xl font-bold text-white mb-1">${item.title}</h3><p class="text-amber-400 text-sm tracking-widest uppercase">The School Album</p>`;
+                
+                div.appendChild(img);
+                div.appendChild(info);
+                container.appendChild(div);
+            });
+            updateCoverflow();
+        }
+
+        function updateCoverflow() {
+            const items = document.querySelectorAll('.gallery-item');
+            const total = items.length;
+            
+            items.forEach((item, index) => {
+                item.classList.remove('active');
+                
+                // Calculate distance from active index
+                let diff = index - activeGalleryIndex;
+                
+                // Wrap around logic for infinite loop effect
+                if (diff > total / 2) diff -= total;
+                if (diff < -total / 2) diff += total;
+
+                if (diff === 0) {
+                    // Center Active Item
+                    item.style.transform = `translateX(0) translateZ(100px) rotateY(0deg) scale(1)`;
+                    item.style.zIndex = 100;
+                    item.style.opacity = 1;
+                    item.style.filter = 'blur(0px) brightness(1)';
+                    item.classList.add('active');
+                } else {
+                    // Background Stacked Items
+                    const sign = Math.sign(diff);
+                    const absDiff = Math.abs(diff);
+                    
+                    const translateX = sign * (35 + absDiff * 12); // Spread them out
+                    const rotateY = sign * -35; 
+                    const translateZ = absDiff * -150; 
+                    const scale = 1 - (absDiff * 0.1); 
+
+                    item.style.transform = `translateX(${translateX}%) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+                    item.style.zIndex = 100 - absDiff;
+                    item.style.opacity = 1 - (absDiff * 0.15); // Fade them slightly
+                    item.style.filter = `blur(${absDiff * 2}px) brightness(${1 - absDiff*0.2})`;
+                }
+            });
+        }
+
+        function autoRotateCoverflow() {
+            activeGalleryIndex = (activeGalleryIndex + 1) % galleryImages.length;
+            updateCoverflow();
+        }
+
+        function resetCoverflowTimer() {
+            clearInterval(coverflowInterval);
+            coverflowInterval = setInterval(autoRotateCoverflow, 4000);
+        }
+
+        // --- 5. FLOATING TYPEWRITER MODAL LOGIC (7 Facilities) ---
+        const facilityData = {
+            library: {
+                title: "Modern Library", icon: "fa-book",
+                paragraphs: ["Our library is a sanctuary for curious minds, featuring over 10,000 physical volumes covering advanced sciences, arts, and global history.", "Beyond physical books, we have integrated state-of-the-art digital reading kiosks. These provide students with unhindered access to global research databases.", "We host weekly interactive book clubs to cultivate a deep, lifelong passion for reading."],
+                images: ['https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1920&auto=format&fit=crop']
+            },
+            science: {
+                title: "Science Labs", icon: "fa-flask",
+                paragraphs: ["Our highly advanced Physics, Chemistry, and Biology laboratories allow students to test theoretical boundaries in a completely safe, monitored environment.", "Fully equipped with modern safety gear, microscopes, and chemical stations, students perform real-time experiments that ignite a profound passion for STEM fields.", "We believe that true science is learned through failure and discovery, not just textbooks."],
+                images: ['https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1920&auto=format&fit=crop']
+            },
+            computer: {
+                title: "Computer Lab", icon: "fa-desktop",
+                paragraphs: ["Our technology facility is purposefully designed to bridge the massive gap between theoretical textbook knowledge and real-world execution.", "The lab is fully air-conditioned and strictly enforces a 1:1 student-to-computer ratio. This ensures zero idle time during highly practical logic sessions.", "From basic coding logic in standard I to complex software design in standard X, our cutting-edge curriculum prepares them for a deeply digital future."],
+                images: ['https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1920&auto=format&fit=crop']
+            },
+            audiovisual: {
+                title: "Smart Classes", icon: "fa-film",
+                paragraphs: ["We believe that seeing is understanding. By visually demonstrating complex scientific and geographical concepts, students retain information significantly faster.", "Our classrooms are equipped with high-definition interactive smartboards and projection systems that completely replace outdated blackboard methods.", "Teachers utilize customized multimedia modules, effectively turning every single classroom into an immersive theater of learning."],
+                images: ['https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1920&auto=format&fit=crop']
+            },
+            sports: {
+                title: "Sports Complex", icon: "fa-basketball",
+                paragraphs: ["A healthy mind resides in an exceptionally healthy body. Our sprawling sports complex features dedicated spaces for basketball, football, and track athletics.", "Professional coaches train students not just in the rules of the game, but in absolute teamwork, leadership, and emotional regulation under immense pressure.", "The facility includes indoor badminton courts and a fully equipped gymnasium for physical conditioning."],
+                images: ['https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=1920&auto=format&fit=crop']
+            },
+            martial: {
+                title: "Martial Arts", icon: "fa-shield-halved",
+                paragraphs: ["Specialized self-defense and physical conditioning classes engineered to build unshakeable discipline, focus, and immense inner strength.", "Conducted by elite state-certified instructors, our dojo environment heavily promotes respect for peers and sharpens physical reflexes.", "Students regularly participate in state-level martial arts competitions, learning the true, uncompromising value of sportsmanship and resilience."],
+                images: ['https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=1920&auto=format&fit=crop']
+            },
+            arts: {
+                title: "Fine Arts Studio", icon: "fa-palette",
+                paragraphs: ["Creativity is the highest form of intelligence. Our Fine Arts Studio provides a tranquil, inspiring space for students to freely express themselves.", "From classical oil painting and clay sculpting to modern digital illustration and acoustic music, we provide the absolute best tools and instruments available.", "Annual art exhibitions allow students to showcase their masterpieces to parents and the local community, building immense self-confidence."],
+                images: ['https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1920&auto=format&fit=crop']
+            }
+        };
+
+        let modalInterval;
+        let typeTimeout;
+
+        function openFacilityModal(id) {
+            const data = facilityData[id];
+            if(!data) return;
+
+            clearTimeout(typeTimeout);
+            const descContainer = document.getElementById('modal-desc');
+            descContainer.innerHTML = ''; 
+
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-icon').innerHTML = `<i class="fa-solid ${data.icon} text-5xl"></i>`;
+
+            const bgContainer = document.getElementById('modal-bg-container');
+            bgContainer.innerHTML = '';
+            
+            data.images.forEach((imgSrc, index) => {
+                const div = document.createElement('div');
+                div.className = `modal-bg-slide ${index === 0 ? 'opacity-100' : 'opacity-0'}`;
+                div.style.backgroundImage = `url('${imgSrc}')`;
+                bgContainer.appendChild(div);
+            });
+
+            document.getElementById('facility-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            let pIndex = 0;
+            let cIndex = 0;
+            let currentParagraph = document.createElement('p');
+            currentParagraph.className = "mb-8";
+            descContainer.appendChild(currentParagraph);
+
+            function typeWriter() {
+                if (pIndex < data.paragraphs.length) {
+                    if (cIndex < data.paragraphs[pIndex].length) {
+                        currentParagraph.innerHTML += data.paragraphs[pIndex].charAt(cIndex);
+                        cIndex++;
+                        typeTimeout = setTimeout(typeWriter, 12); 
+                    } else {
+                        pIndex++;
+                        cIndex = 0;
+                        if (pIndex < data.paragraphs.length) {
+                            currentParagraph = document.createElement('p');
+                            currentParagraph.className = "mb-8";
+                            descContainer.appendChild(currentParagraph);
+                            typeTimeout = setTimeout(typeWriter, 300); 
+                        } else {
+                            descContainer.classList.remove('typewriter-cursor');
+                        }
+                    }
+                }
+            }
+            
+            descContainer.classList.add('typewriter-cursor');
+            typeTimeout = setTimeout(typeWriter, 400); 
+        }
+
+        function closeFacilityModal() {
+            document.getElementById('facility-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            clearTimeout(typeTimeout); 
+        }
+
+        // Initialize Everything on Load
+        document.addEventListener('DOMContentLoaded', () => { 
+            createHeroSlider(); 
+            setupCurriculumScroll();
+            buildCoverflow();
+            resetCoverflowTimer();
+            lucide.createIcons();
+            
+            document.getElementById('contactForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert("Enquiry successfully sent! We will contact you soon.");
+                e.target.reset();
+            });
+        });
+    </script>
+</body>
+</html>
